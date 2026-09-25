@@ -152,3 +152,42 @@ baris untuk satu buku yang dipinjam):
 Sudah 1NF, tetapi masih terdapat redundansi: data Nama dan Prodi berulang setiap kali NIM
 yang sama meminjam buku, begitu pula data Judul_Buku dan Nama_Penerbit berulang setiap kali
 Kode_Buku yang sama muncul.
+
+### 5.3 Second Normal Form (2NF)
+
+Kunci pada tabel 1NF bersifat komposit, yaitu (NIM, Kode_Buku, Tanggal_Pinjam). Atribut
+Nama dan Prodi hanya bergantung pada sebagian kunci (NIM saja), bukan pada keseluruhan
+kunci komposit -- ini disebut dependensi parsial dan melanggar 2NF. Begitu pula
+Judul_Buku dan Nama_Penerbit hanya bergantung pada Kode_Buku.
+
+Untuk memenuhi 2NF, tabel dipecah menjadi tiga:
+
+**Mahasiswa** (NIM, Nama, Prodi)
+
+**Buku** (Kode_Buku, Judul_Buku, Nama_Penerbit)
+
+**Peminjaman** (NIM, Kode_Buku, Tanggal_Pinjam, Tanggal_Kembali)
+
+Setiap atribut non-kunci kini bergantung penuh pada kunci di tabelnya masing-masing.
+
+### 5.4 Third Normal Form (3NF)
+
+Pada tabel Buku hasil 2NF, atribut Nama_Penerbit sebenarnya tidak bergantung langsung pada
+Kode_Buku, melainkan bergantung pada penerbit yang menerbitkan buku tersebut (Kode_Buku ->
+Id_Penerbit -> Nama_Penerbit). Ini adalah dependensi transitif dan melanggar 3NF.
+
+Untuk memenuhi 3NF, atribut penerbit dipisahkan ke tabel tersendiri dan dihubungkan melalui
+foreign key:
+
+**Mahasiswa** (NIM, Nama, Prodi)
+
+**Penerbit** (Id_Penerbit, Nama_Penerbit)
+
+**Buku** (Kode_Buku, Judul_Buku, Id_Penerbit*)
+
+**Transaksi_Peminjaman** (Id_Transaksi, NIM*, Kode_Buku*, Tanggal_Pinjam, Tanggal_Kembali)
+
+*keterangan: atribut bertanda \* adalah foreign key.*
+
+Seluruh tabel kini bebas dari dependensi parsial maupun transitif, sehingga struktur data
+telah memenuhi 3NF dan siap dijadikan rancangan tabel akhir pada bagian 6.
