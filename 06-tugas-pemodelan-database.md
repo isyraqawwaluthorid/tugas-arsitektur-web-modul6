@@ -72,3 +72,52 @@ erDiagram
         int denda
     }
 ```
+
+## 4. Atribut Entitas, Primary Key, dan Foreign Key
+
+### 4.1 Mahasiswa
+
+| Atribut | Keterangan |
+|---|---|
+| nim | Primary Key |
+| nama | - |
+| program_studi | - |
+| angkatan | - |
+| email | - |
+| no_telepon | - |
+
+### 4.2 Penerbit
+
+| Atribut | Keterangan |
+|---|---|
+| id_penerbit | Primary Key |
+| nama_penerbit | - |
+| kota | - |
+| no_telepon | - |
+| email | - |
+
+### 4.3 Buku
+
+| Atribut | Keterangan |
+|---|---|
+| kode_buku | Primary Key |
+| judul | - |
+| pengarang | - |
+| id_penerbit | Foreign Key -> Penerbit(id_penerbit) |
+| tahun_terbit | - |
+| isbn | - |
+| kategori | - |
+| stok | - |
+
+### 4.4 Transaksi Peminjaman
+
+| Atribut | Keterangan |
+|---|---|
+| id_transaksi | Primary Key |
+| nim | Foreign Key -> Mahasiswa(nim) |
+| kode_buku | Foreign Key -> Buku(kode_buku) |
+| tanggal_pinjam | - |
+| tanggal_jatuh_tempo | - |
+| tanggal_kembali | - |
+| status | - |
+| denda | - |
