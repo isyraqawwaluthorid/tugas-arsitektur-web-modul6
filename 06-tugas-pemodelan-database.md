@@ -121,3 +121,34 @@ erDiagram
 | tanggal_kembali | - |
 | status | - |
 | denda | - |
+
+## 5. Simulasi Normalisasi
+
+### 5.1 Unnormalized Form (UNF)
+
+Data mentah dari petugas perpustakaan dicatat sebagai satu tabel peminjaman, di mana satu
+mahasiswa dapat mencatat beberapa buku yang dipinjam sekaligus dalam satu baris (atribut
+berulang / *repeating group*):
+
+| NIM | Nama | Prodi | Buku Dipinjam |
+|---|---|---|---|
+| D121001 | Andi | Teknik Informatika | {B001, Basis Data, Penerbit A, 2026-08-01, 2026-08-10}, {B002, Struktur Data, Penerbit B, 2026-08-01, -} |
+| D121002 | Budi | Sistem Informasi | {B003, Jaringan Komputer, Penerbit A, 2026-08-03, -} |
+
+Bentuk ini belum memenuhi UNF sebagai basis data relasional karena kolom "Buku Dipinjam"
+menyimpan lebih dari satu nilai (multivalued) dalam satu sel.
+
+### 5.2 First Normal Form (1NF)
+
+Repeating group dipecah sehingga setiap baris hanya berisi satu nilai atomik per kolom (satu
+baris untuk satu buku yang dipinjam):
+
+| NIM | Nama | Prodi | Kode_Buku | Judul_Buku | Nama_Penerbit | Tanggal_Pinjam | Tanggal_Kembali |
+|---|---|---|---|---|---|---|---|
+| D121001 | Andi | Teknik Informatika | B001 | Basis Data | Penerbit A | 2026-08-01 | 2026-08-10 |
+| D121001 | Andi | Teknik Informatika | B002 | Struktur Data | Penerbit B | 2026-08-01 | - |
+| D121002 | Budi | Sistem Informasi | B003 | Jaringan Komputer | Penerbit A | 2026-08-03 | - |
+
+Sudah 1NF, tetapi masih terdapat redundansi: data Nama dan Prodi berulang setiap kali NIM
+yang sama meminjam buku, begitu pula data Judul_Buku dan Nama_Penerbit berulang setiap kali
+Kode_Buku yang sama muncul.
