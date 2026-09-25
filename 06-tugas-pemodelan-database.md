@@ -191,3 +191,52 @@ foreign key:
 
 Seluruh tabel kini bebas dari dependensi parsial maupun transitif, sehingga struktur data
 telah memenuhi 3NF dan siap dijadikan rancangan tabel akhir pada bagian 6.
+
+## 6. Rancangan Tabel Akhir
+
+### 6.1 Tabel Mahasiswa
+
+| Kolom | Tipe Data | Keterangan |
+|---|---|---|
+| nim | VARCHAR(15) | Primary Key |
+| nama | VARCHAR(100) | NOT NULL |
+| program_studi | VARCHAR(50) | NOT NULL |
+| angkatan | SMALLINT | NOT NULL |
+| email | VARCHAR(100) | UNIQUE |
+| no_telepon | VARCHAR(15) | - |
+
+### 6.2 Tabel Penerbit
+
+| Kolom | Tipe Data | Keterangan |
+|---|---|---|
+| id_penerbit | INT | Primary Key, AUTO_INCREMENT |
+| nama_penerbit | VARCHAR(100) | NOT NULL |
+| kota | VARCHAR(50) | - |
+| no_telepon | VARCHAR(15) | - |
+| email | VARCHAR(100) | - |
+
+### 6.3 Tabel Buku
+
+| Kolom | Tipe Data | Keterangan |
+|---|---|---|
+| kode_buku | VARCHAR(10) | Primary Key |
+| judul | VARCHAR(150) | NOT NULL |
+| pengarang | VARCHAR(100) | NOT NULL |
+| id_penerbit | INT | Foreign Key -> penerbit(id_penerbit) |
+| tahun_terbit | SMALLINT | - |
+| isbn | VARCHAR(20) | UNIQUE |
+| kategori | VARCHAR(50) | - |
+| stok | INT | NOT NULL, DEFAULT 0 |
+
+### 6.4 Tabel Transaksi_Peminjaman
+
+| Kolom | Tipe Data | Keterangan |
+|---|---|---|
+| id_transaksi | INT | Primary Key, AUTO_INCREMENT |
+| nim | VARCHAR(15) | Foreign Key -> mahasiswa(nim) |
+| kode_buku | VARCHAR(10) | Foreign Key -> buku(kode_buku) |
+| tanggal_pinjam | DATE | NOT NULL |
+| tanggal_jatuh_tempo | DATE | NOT NULL |
+| tanggal_kembali | DATE | NULL (diisi saat buku dikembalikan) |
+| status | ENUM('dipinjam','dikembalikan','terlambat') | NOT NULL, DEFAULT 'dipinjam' |
+| denda | INT | DEFAULT 0 |
